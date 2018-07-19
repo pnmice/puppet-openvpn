@@ -1,3 +1,5 @@
+#### 2018-07-18 - 1.0.5
+* Add more options for Client config.
 #### 2017-12-04 - 1.0.4
 * Add local source address conftemplate parameter (#7, @forgodssake).
 
