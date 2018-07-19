@@ -7,10 +7,16 @@ Puppet module to manage OpenVPN links. It supports Red Hat Enterprise Linux
 modify to support more distributions.
 
 * `openvpn` : Main class to install, enable and configure the service.
-* `openvpn::conf` : Definition to manage OpenVPN configuration files.
 * `openvpn::conftemplate` : Same as conf, but based on an included template.
-* `openvpn::secret` : Definition to manage OpenVPN secret key files.
-* `openvpn::startup_script` : Class to configure an optional startup script.
+
+Disable selinux
+* puppet module install puppet-selinux
+
+```puppet
+class { selinux:
+  mode => 'disabled',
+}
+```
 
 ## Examples
 
