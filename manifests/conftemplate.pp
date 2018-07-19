@@ -4,31 +4,33 @@
 # useful for simple shared key VPN links.
 #
 define openvpn::conftemplate (
-  # Template options
-  $dev,
-  $remote,
-  $ipaddress_remote,
-  $secret,
+  $dev              = undef,
+  $remote           = undef,
   $local            = undef,
   $proto            = undef,
   $fragment         = undef,
   $mssfix           = undef,
   $float            = undef,
-  $ipaddress_local  = $::ipaddress,
+  $topology         = undef,
+  $resolv_retry     = undef,
   $routes           = [],
-  $port             = '1194',
+  $port             = undef,
   $user             = 'openvpn',
   $group            = 'openvpn',
-  $verb             = '3',
-  # Main options
+  $verb             = undef,
   $dir              = '/etc/openvpn',
+  $ca               = undef,
+  $cert             = undef,
+  $key              = undef,
+  $mode             = undef,
+  $tls_auth         = undef,
 ) {
 
   openvpn::conf { $title:
     dir     => $dir,
     content => template('openvpn/default.conf.erb'),
     # The secret file referenced, which already requires the parent dir
-    require => File["${dir}/${secret}"],
+    #require => [ "File[${ca}]", "File[${cert}]", "File[${key}]" ]
   }
 
 }

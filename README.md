@@ -18,37 +18,20 @@ Basic OpenVPN setup :
 
 ```puppet
 include '::openvpn'
-openvpn::secret { 'example.key':
-  source => 'puppet:///modules/mymodule/openvpn/example.key',
-}
-openvpn::conftemplate { 'example':
-  dev              => 'tun0',
-  remote           => 'remote-server.example.com',
-  ipaddress_local  => '192.168.0.1',
-  ipaddress_remote => '192.168.0.2',
-  routes           => [ '192.168.1.0 255.255.255.0' ],
-  secret           => 'example.key',
-}
-```
-
-For a user VPN we also need to pre-create a tap device when OpenVPN starts
-and add it to an existing network bridge :
-
-```puppet
-$tapdev = 'tap1'
-$tapbridge = 'br1'
-class { '::openvpn::startup_script':
-  content => template('openvpn/openvpn-startup.erb'),
+include '::openvpn'
+openvpn::conftemplate { 'client01':
+  mode         => 'client',
+  dev          => 'tap0',
+  proto        => 'udp',
+  remote       => 'remote-server.example.com',
+  local        => 'local-ip',
+  port         => '2222',
+  verb         => '4',
+  resolv_retry => 'infinite',
+  topology     => 'subnet',
+  ca           => '/etc/openvpn/client/keys/ca.crt',
+  cert         => '/etc/openvpn/client/keys/client.crt',
+  key          => '/etc/openvpn/client/keys/client.key',
+  tls_auth     => '/etc/openvpn/client/keys/ta.key 1',
 }
 ```
-
-If you intend to run OpenVPN on non-standard ports, you will need to modify
-your SELinux policy accordingly. Here is one (fragile) way of doing it :
-
-```puppet
-# Add 4100-4149 udp port range for OpenVPN links
-exec { '/usr/sbin/semanage port -a -t openvpn_port_t -p udp 4100-4149':
-    unless => '/usr/sbin/semanage port -l -C | /bin/grep -q openvpn_port_t',
-}
-```
-

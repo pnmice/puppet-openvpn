@@ -1,3 +1,8 @@
+<% if @mode == "server" %>
+server
+<% else %> 
+client
+<% end %>
 dev <%= @dev %>
 <% if @fragment -%>
 fragment <%= @fragment %>
@@ -5,33 +10,48 @@ fragment <%= @fragment %>
 <% if @mssfix -%>
 mssfix
 <% end -%>
+<% if @ca -%>
+ca <%= @ca %>
+<% end -%>
+<% if @cert -%>
+cert <%= @cert %>
+<% end -%>
+<% if @key -%>
+key <%= @key %>
+<% end -%>
+<% if @tls_auth -%>
+tls-auth <%= @tls_auth %>
+<% end -%>
+<% if @proto -%>
+proto <%= @proto %>
+<% end -%>
 <% if @local -%>
 local <%= @local %>
 <% end -%>
-remote <%= @remote %>
-<% if @proto -%>
-proto <%= proto %>
+<% if @topology -%>
+topology <%= @topology %>
 <% end -%>
+<% if @resolv_retry -%>
+resolv-retry <%= @resolv_retry %>
+<% end -%>
+remote <%= @remote %>
 <% if @float -%>
 float
 <% end -%>
-# Local  : <%= @ipaddress_local %>
-# Remote : <%= @ipaddress_remote %>
-ifconfig <%= @ipaddress_local %> <%= @ipaddress_remote %>
 <% if !@routes.empty? -%>
-# Static routes
 <% @routes.each do |route| -%>
 route <%= route %>
 <% end -%>
 <% end -%>
-secret <%= @secret %>
 port <%= @port %>
 
+auth-nocache
 comp-lzo
+cipher AES-256-CBC
+tls-client
+remote-cert-tls server
 user <%= @user %>
 group <%= @group %>
 persist-key
 persist-tun
-mute-replay-warnings
 verb <%= @verb %>
-
