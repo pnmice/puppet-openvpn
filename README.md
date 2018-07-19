@@ -18,7 +18,6 @@ Basic OpenVPN setup :
 
 ```puppet
 include '::openvpn'
-include '::openvpn'
 openvpn::conftemplate { 'client01':
   mode         => 'client',
   dev          => 'tap0',
