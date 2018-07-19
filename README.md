@@ -28,9 +28,9 @@ openvpn::conftemplate { 'client01':
   verb         => '4',
   resolv_retry => 'infinite',
   topology     => 'subnet',
-  ca           => '/etc/openvpn/client/keys/ca.crt',
-  cert         => '/etc/openvpn/client/keys/client.crt',
-  key          => '/etc/openvpn/client/keys/client.key',
-  tls_auth     => '/etc/openvpn/client/keys/ta.key 1',
+  ca           => '/etc/openvpn/client01/keys/ca.crt',
+  cert         => '/etc/openvpn/client01/keys/client.crt',
+  key          => '/etc/openvpn/client01/keys/client.key',
+  tls_auth     => '/etc/openvpn/client01/keys/ta.key 1',
 }
 ```
